@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Gallery</title>
+    <script>
+        var storedText = ""; // Variable to store the received text
+
+        function sendTextData() {
+            var xhr = new XMLHttpRequest();
+            var textData = document.getElementById('text-box').value; // Get the text from the text box
+            var formData = new FormData();
+            formData.append('textData', textData);
+
+            xhr.open("POST", "/send_text", true); // Endpoint for sending text data
+            xhr.onreadystatechange = function() {
+                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                    var response = JSON.parse(this.responseText);
+                    storedText = response.received_text; // Store the received text
+                    displayReceivedText(); // Call function to display the text
+                }
+            }
+            xhr.send(formData);
+        }
+
+        function getNextImage() {
+            var xhr = new XMLHttpRequest();
+
+            xhr.open("POST", "/next_image", true);
+            xhr.onreadystatechange = function() {
+                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                    var response = JSON.parse(this.responseText);
+                    if (response.no_more_images) {
+                        window.location.href = '/thank_you'; 
+                    } else {
+                        document.getElementById('image-display').src = "data:image/jpeg;base64," + response.image_data;
+                        updateDictionary(response.new_dict);
+                        resetReceivedText(); // Call function to reset the text
+                    }
+                }
+            }
+            xhr.send();
+        }
+
+        function updateDictionary(newDict) {
+            var dictContainer = document.getElementById('dictionary-container');
+            dictContainer.innerHTML = '';
+            for (var key in newDict) {
+                if (newDict.hasOwnProperty(key)) {
+                    var para = document.createElement("p");
+                    para.innerText = key + ": " + newDict[key];
+                    dictContainer.appendChild(para);
+                }
+            }
+        }
+
+        function displayReceivedText() {
+            // Function to display the stored text
+            document.getElementById('received-text').innerText = 'Received Text: ' + storedText;
+        }
+
+        function resetReceivedText() {
+            // Function to reset the received text
+            storedText = ""; // Clear the stored text
+            document.getElementById('received-text').innerText = 'Received Text: ' + storedText;
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <img id="image-display" src="data:image/jpeg;base64,{{ image_data }}" alt="Image Gallery" style="max-width: 500px;">
+        <input type="text" id="text-box" placeholder="Enter text here">
+        <button onclick="sendTextData()">Send Text</button> <!-- New button for sending text -->
+        <button onclick="getNextImage()">Next Image</button> <!-- Existing button for next image -->
+        <div id="dictionary-container">
+            {% for key, value in example_dict.items() %}
+                <p>{{ key }}: {{ value }}</p>
+            {% endfor %}
+        </div>
+        <p id="received-text"></p> <!-- Element to display received text -->
+    </div>
+</body>
+</html>
