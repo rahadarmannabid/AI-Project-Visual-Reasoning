@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify, redirect, url_for
 import base64
 import os
 import random
+from visionreasoning import question_generation
 
 app = Flask(__name__)
 
@@ -24,12 +25,12 @@ def index():
     global current_image_index
     current_image_index = 0
     image_path = os.path.join('static/modified-image', images[current_image_index])
-    
+
     with open(image_path, "rb") as image_file:
         encoded_image = base64.b64encode(image_file.read()).decode("utf-8")
-
-    example_dict = generate_random_dict()
-    return render_template('reasoning.html', image_data=encoded_image, example_dict=example_dict)
+    response = question_generation(image_path)
+    print("this is the response", response)
+    return render_template('reasoning.html', image_data=encoded_image, example_dict=response)
 
 @app.route('/next_image', methods=['POST'])
 def next_image():
