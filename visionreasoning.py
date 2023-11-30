@@ -8,7 +8,7 @@ import json
 
 
 
-api_key = 'sk-OsFWNv0s1pTIahd9ZiaST3BlbkFJpn1oXRg3QJzUTUNYYZu'
+api_key = "sk-h15jsz6j9hq2WUtBPaOPT3BlbkFJsL8GHS4O6fN0BTCueM"
 
 def call_gpt4_with_image(base64_image, prompt):
     headers = {
@@ -78,8 +78,12 @@ def question_gpt(img_data):
     Question Topic: Commonsense reasoning, arithmatic reasoning,  creative reasoning, probabilistic reasoning, deductive reasoning ,inductive reasoning ,abductive reasoning ,analogical reasoning, spatial reasoning, temporal reasoning, causal reasoning,moral and Ethical reasoning, metacognitive reasoning,social reasoning, diagnostic reasoning ,strategic reasoning,intuitive reasoning, explanatory reasoning
     """
     response = call_gpt4_with_image(img_data, prompt)
-    print("question_gpt response", response)
-    questions_about_image = convert_string_to_dict(response)
+    # print("question_gpt response", response)
+    try: 
+        questions_about_image = convert_string_to_dict(response)
+    except:
+        questions_about_image = question_gpt(img_data)
+    
     return questions_about_image
 
 
@@ -91,11 +95,18 @@ def encode_image(image_path: str):
     
     
 def question_generation(image_path):
-    print("this is the image path", image_path)
+    # print("this is the image path", image_path)
     base64_image = encode_image(image_path)
-    response = question_gpt(base64_image)
+    try:
+        response = question_gpt(base64_image)
+    except:
+        response = question_gpt(base64_image)
     return response
 
+def answer_generation(image_path, prompt):
+    base64_image = encode_image(image_path)
+    response = call_gpt4_with_image(base64_image, prompt)
+    return response
 
 
 
