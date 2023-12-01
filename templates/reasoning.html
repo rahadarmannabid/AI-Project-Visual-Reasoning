@@ -11,30 +11,33 @@
             margin: 0;
             padding: 0;
             font-size: 16px; /* Reduced the font size for the entire page */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Center content vertically on the page */
         }
 
         .container {
             max-width: 1200px;
-            margin: 0 auto;
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
-            display: flex; /* Display content in a flex layout */
-            border: 1px solid #ddd; /* Added border around the container */
+            display: flex;
+            border: 1px solid #ddd;
         }
 
         .left-side {
-            flex: 1; /* Make the left side flexible to take available space */
+            flex: 1;
             padding: 20px;
-            box-sizing: border-box; /* Include padding in the width */
-            border-right: 1px solid #ddd; /* Added border to separate the sections */
+            box-sizing: border-box;
+            border-right: 1px solid #ddd;
         }
 
         .right-side {
-            flex: 1; /* Make the right side flexible to take available space */
+            flex: 1;
             padding: 20px;
-            box-sizing: border-box; /* Include padding in the width */
+            box-sizing: border-box;
         }
 
         h1 {
@@ -45,7 +48,7 @@
 
         img {
             max-width: 100%;
-            height: auto;
+            height: auto; /* Maintain aspect ratio of the image */
             border: 1px solid #ddd;
             border-radius: 5px;
         }
@@ -58,20 +61,20 @@
         }
 
         button {
-            background-color: #45a049; /* Updated button background color */
+            background-color: #45a049;
             color: #fff;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 14px; /* Reduced font size for buttons */
-            margin-right: 10px; /* Added spacing between buttons */
-            margin-top: 10px; /* Added spacing between buttons */
+            font-size: 14px;
+            margin-right: 10px;
+            margin-top: 10px;
             transition: background-color 0.3s ease;
         }
 
         button:hover {
-            background-color: #2e7d32; /* Updated hover background color */
+            background-color: #2e7d32;
         }
 
         #dictionary-container {
@@ -86,10 +89,10 @@
         #received-text {
             margin-top: 20px;
             font-weight: bold;
-            font-size: 18px; /* Increased font size for received text */
-            padding: 10px; /* Added padding to received text */
-            background-color: #f2f2f2; /* Background color for received text */
-            border-radius: 5px; /* Rounded corners for received text */
+            font-size: 18px;
+            padding: 10px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
         }
 
         .loading {
@@ -133,16 +136,16 @@
             <input type="text" id="text-box" placeholder="Enter your response here">
             <button onclick="sendTextData()">Submit Response</button>
             <button onclick="getNextImage()">Next Image</button>
+            <div class="loading">
+                <span class="loading-text">Loading...</span>
+                <div class="loading-spinner"></div>
+            </div>
             <div id="dictionary-container">
                 {% for key, value in example_dict.items() %}
                     <p><button onclick="sendTextData('{{ value }}')">{{ value }}</button></p>
                 {% endfor %}
             </div>
             
-            <div class="loading">
-                <span class="loading-text">Loading...</span>
-                <div class="loading-spinner"></div>
-            </div>
         </div>
     </div>
     
@@ -203,7 +206,6 @@
             for (var key in newDict) {
                 if (newDict.hasOwnProperty(key)) {
                     var para = document.createElement("p");
-                    // para.innerText = key + ": ";
                     var button = document.createElement("button");
                     button.innerText = newDict[key];
                     button.onclick = function() {

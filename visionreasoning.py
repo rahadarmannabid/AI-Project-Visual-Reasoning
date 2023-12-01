@@ -8,7 +8,7 @@ import json
 
 
 
-api_key = "sk-h15jsz6j9hq2WUtBPaOPT3BlbkFJsL8GHS4O6fN0BTCueM"
+api_key = "sk-h15jsz6j9hq2WUtBPaOPT3BlbkFJsL8GHS4O6fN0BTCueMs"
 
 def call_gpt4_with_image(base64_image, prompt):
     headers = {
@@ -79,11 +79,8 @@ def question_gpt(img_data):
     """
     response = call_gpt4_with_image(img_data, prompt)
     # print("question_gpt response", response)
-    try: 
-        questions_about_image = convert_string_to_dict(response)
-    except:
-        questions_about_image = question_gpt(img_data)
-    
+    questions_about_image = convert_string_to_dict(response)
+
     return questions_about_image
 
 
@@ -97,10 +94,8 @@ def encode_image(image_path: str):
 def question_generation(image_path):
     # print("this is the image path", image_path)
     base64_image = encode_image(image_path)
-    try:
-        response = question_gpt(base64_image)
-    except:
-        response = question_gpt(base64_image)
+    response = question_gpt(base64_image)
+
     return response
 
 def answer_generation(image_path, prompt):
