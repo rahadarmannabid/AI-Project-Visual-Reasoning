@@ -8,7 +8,7 @@ import json
 
 
 
-api_key = "sk-h15jsz6j9hq2WUtBPaOPT3BlbkFJsL8GHS4O6fN0BTCueMs"
+api_key = "sk-h15jsz6j9hq2WUtBPaOPT3BlbkFJsL8GHS4O6fN0BTCueM"
 
 def call_gpt4_with_image(base64_image, prompt):
     headers = {
@@ -103,6 +103,24 @@ def answer_generation(image_path, prompt):
     response = call_gpt4_with_image(base64_image, prompt)
     return response
 
+def brute_dictonary(image_path):
+    if image_path == "static/original-image/image-1.jpg":
+        return {'question_1': 'What is the large animal in the image?', 'question_2': 'What time of day does the image seem to depict?', 'question_3': 'How many motorcycles can be seen in the image?', 'question_4': 'Why might the elephant be in an urban setting?', 'question_5': 'What emotions might people in the image feel upon seeing the elephant?', 'question_6': 'Are the vehicles in motion or parked?', 'question_7': 'What kind of businesses might be in the buildings in the background?','question_8': 'Could the presence of the elephant pose a danger in this environment?', 'question_9': 'How might the elephant have come to be in this location?', 'question_10': 'What is the probable relationship between the elephant and the people around?'
+}
+    if image_path == "static/original-image/image-2.jpg":
+        return {'question_1': 'How many animals are in this image?', 'question_2': 'What the dog is doing with the cat?', 'question_3': 'How many boxes are there?'}
+    if image_path == "static/original-image/image-3.jpg":
+        return {'question_1': 'How many animals are in this image?', 'question_2': 'What the dog is doing with the cat?', 'question_3': 'How many boxes are there?'}     
+    if image_path == "static/original-image/image-4.jpg":
+        return {'question_1': 'How many animals are in this image?', 'question_2': 'What the dog is doing with the cat?', 'question_3': 'How many boxes are there?'}  
+    if image_path == "static/original-image/image-5.jpg":
+        return {'question_1': 'How many animals are in this image?', 'question_2': 'What the dog is doing with the cat?', 'question_3': 'How many boxes are there?'}
+    if image_path == "static/original-image/image-6.jpg":
+        return {'question_1': 'How many animals are in this image?', 'question_2': 'What the dog is doing with the cat?', 'question_3': 'How many boxes are there?'}     
+    if image_path == "static/original-image/image-7.jpg":
+        return {'question_1': 'How many animals are in this image?', 'question_2': 'What the dog is doing with the cat?', 'question_3': 'How many boxes are there?'}
+    else:
+        return {'error': 'error '}
 
 
 

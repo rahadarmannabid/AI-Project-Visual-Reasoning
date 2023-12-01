@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify, redirect, url_for
 import base64
 import os
 import random
-from visionreasoning import question_generation, answer_generation
+from visionreasoning import question_generation, answer_generation, brute_dictonary
 
 app = Flask(__name__)
 
@@ -34,8 +34,8 @@ def index():
     i = 0
     while response is None:
         response = question_generation(image_path_original)
-        if i > 3:
-            break
+        if i > 2:
+            response = brute_dictonary(image_path_original)
         i = i + 1
 
     print(type(response))
@@ -57,8 +57,8 @@ def next_image():
         i = 0
         while response is None:
             response = question_generation(image_path_original)
-            if i > 3:
-                break
+            if i > 2:
+                response = brute_dictonary(image_path_original)
             i = i + 1
 
         return jsonify({'image_data': encoded_image, 'new_dict': response})
