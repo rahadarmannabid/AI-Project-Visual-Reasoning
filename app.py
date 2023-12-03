@@ -31,14 +31,16 @@ def index():
     with open(image_path, "rb") as image_file:
         encoded_image = base64.b64encode(image_file.read()).decode("utf-8")
     response = None
-    i = 0
-    while response is None:
-        response = question_generation(image_path_original)
-        if i > 2:
-            response = brute_dictonary(image_path_original)
-        i = i + 1
+    #comment out if you want to generate the questions automatically
+    # i = 0
+    # while response is None:
+    #     response = question_generation(image_path_original)
+    #     if i > 2:
+    #         response = brute_dictonary(image_path_original)
+    #     i = i + 1
+    response = brute_dictonary(image_path_original)
 
-    print(type(response))
+    print(response)
 
     return render_template('reasoning.html', image_data=encoded_image, example_dict=response)
 
@@ -54,12 +56,16 @@ def next_image():
             encoded_image = base64.b64encode(image_file.read()).decode("utf-8")
         response = None
         
-        i = 0
-        while response is None:
-            response = question_generation(image_path_original)
-            if i > 2:
-                response = brute_dictonary(image_path_original)
-            i = i + 1
+        #comment out if you want to generate the questions automatically
+        # i = 0
+        # while response is None:
+        #     response = question_generation(image_path_original)
+        #     if i > 2:
+        #         response = brute_dictonary(image_path_original)
+        #     i = i + 1
+        # print(response)
+
+        response = brute_dictonary(image_path_original)
 
         return jsonify({'image_data': encoded_image, 'new_dict': response})
     else:
